@@ -1,0 +1,33 @@
+{
+  "name": "भोजपुर राज्य आंदोलन - Bhojpur Rajya Movement",
+  "short_name": "Bhojpur Rajya",
+  "description": "28 जिलों का प्रस्तावित राज्य - बिहार, उत्तर प्रदेश और झारखंड",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f97316",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo1.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "politics",
+    "education",
+    "news"
+  ],
+  "lang": "hi",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+}

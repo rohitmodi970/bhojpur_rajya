@@ -10,6 +10,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-eczar: "Eczar", serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,4 +24,58 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.font-eczar {
+  font-family: "Eczar", serif;
+  font-optical-sizing: auto;
+}
+
+.font-eczar-bold {
+  font-family: "Eczar", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+}
+
+.font-eczar-extrabold {
+  font-family: "Eczar", serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+}
+
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 15s ease infinite;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #f97316, #fb923c);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #ea580c, #f97316);
 }
