@@ -70,7 +70,7 @@ export default function StateInfo() {
               viewport={{ once: true }}
               className="inline-block bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-bold mb-4 uppercase tracking-wider"
             >
-              Proposed State
+             प्रस्तावित राज्य
             </motion.span>
             <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4 font-eczar">
               प्रस्तावित <span className="text-green-600">भोजपुरी राज्य</span>

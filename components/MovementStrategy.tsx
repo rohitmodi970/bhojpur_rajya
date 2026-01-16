@@ -72,13 +72,14 @@ export default function MovementStrategy() {
           className="text-center mb-16"
         >
           <span className="inline-block bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-bold mb-4 uppercase tracking-wider">
-            Strategy
+          रणनीति
           </span>
           <h2 className="text-4xl md:text-5xl font-black text-gray-800 mb-4">
             आंदोलन की रणनीति
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            How to Strengthen the Bhojpur Rajya Movement
+           
+          भोजपुर राज्य आंदोलन को कैसे मजबूत करें
           </p>
           <div className="w-32 h-1.5 bg-linear-to-r from-orange-500 via-white to-green-500 mx-auto rounded-full mt-6"></div>
         </motion.div>

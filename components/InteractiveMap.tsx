@@ -62,50 +62,7 @@ export default function InteractiveMap() {
             </div>
           </motion.div>
 
-          {/* State Tabs and District Cards */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            {/* State Selection Tabs */}
-            <div className="flex flex-wrap justify-center gap-4 mb-8">
-              <button
-                onClick={() => { setActiveTab("bihar"); setSelectedDistrict(null); }}
-                className={`px-6 py-3 rounded-full font-bold text-lg transition-all duration-300 flex items-center gap-2 ${
-                  activeTab === "bihar"
-                    ? "bg-orange-500 text-white shadow-lg scale-105"
-                    : "bg-white text-gray-700 hover:bg-orange-50 shadow border-2 border-orange-200"
-                }`}
-              >
-                <span className="w-3 h-3 bg-orange-400 rounded-full"></span>
-                बिहार (9 जिले)
-              </button>
-              <button
-                onClick={() => { setActiveTab("up"); setSelectedDistrict(null); }}
-                className={`px-6 py-3 rounded-full font-bold text-lg transition-all duration-300 flex items-center gap-2 ${
-                  activeTab === "up"
-                    ? "bg-blue-500 text-white shadow-lg scale-105"
-                    : "bg-white text-gray-700 hover:bg-blue-50 shadow border-2 border-blue-200"
-                }`}
-              >
-                <span className="w-3 h-3 bg-blue-400 rounded-full"></span>
-                उत्तर प्रदेश (17 जिले)
-              </button>
-              <button
-                onClick={() => { setActiveTab("jharkhand"); setSelectedDistrict(null); }}
-                className={`px-6 py-3 rounded-full font-bold text-lg transition-all duration-300 flex items-center gap-2 ${
-                  activeTab === "jharkhand"
-                    ? "bg-green-500 text-white shadow-lg scale-105"
-                    : "bg-white text-gray-700 hover:bg-green-50 shadow border-2 border-green-200"
-                }`}
-              >
-                <span className="w-3 h-3 bg-green-400 rounded-full"></span>
-                झारखंड (2 जिले)
-              </button>
-            </div>
-          </motion.div>
+          
 
           {/* Summary Stats */}
           <motion.div
