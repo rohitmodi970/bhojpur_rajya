@@ -1,18 +1,18 @@
 "use client";
 
-import Hero from "./bhojpur-rajya/components/Hero";
-import Vision from "./bhojpur-rajya/components/Vision";
-import Objectives from "./bhojpur-rajya/components/Objectives";
-import WhyNeeded from "./bhojpur-rajya/components/WhyNeeded";
-import StateInfo from "./bhojpur-rajya/components/StateInfo";
-import Bhojpur3DMap from "./bhojpur-rajya/components/BhojpurMap3D";
-import InteractiveMap from "./bhojpur-rajya/components/InteractiveMap";
-import Districts from "./bhojpur-rajya/components/Districts";
-import ConstitutionalBasis from "./bhojpur-rajya/components/ConstitutionalBasis";
-import MovementStrategy from "./bhojpur-rajya/components/MovementStrategy";
-import RegistrationForm from "./bhojpur-rajya/components/RegistrationForm";
-import SloganBanner from "./bhojpur-rajya/components/SloganBanner";
-import FloatingJoinButton from "./bhojpur-rajya/components/FloatingJoinButton";
+import Hero from "@/components/Hero";
+import Vision from "@/components/Vision";
+import Objectives from "@/components/Objectives";
+import WhyNeeded from "@/components/WhyNeeded";
+import StateInfo from "@/components/StateInfo";
+import InteractiveMap from "@/components/InteractiveMap";
+import Districts from "@/components/Districts";
+import ConstitutionalBasis from "@/components/ConstitutionalBasis";
+import MovementStrategy from "@/components/MovementStrategy";
+import RegistrationForm from "@/components/RegistrationForm";
+import SloganBanner from "@/components/SloganBanner";
+import FloatingJoinButton from "@/components/FloatingJoinButton";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -22,13 +22,14 @@ export default function Home() {
       <Objectives />
       <WhyNeeded />
       <StateInfo />
-      <Bhojpur3DMap />
+      <InteractiveMap />
       <Districts />
       <ConstitutionalBasis />
       <MovementStrategy />
       <RegistrationForm />
       <SloganBanner />
       <FloatingJoinButton />
+      <Footer />
     </main>
   );
 }

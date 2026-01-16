@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Factory, ChevronRight, X, MapPin, Maximize2, TrendingUp, Leaf } from "lucide-react";
-import { bhojpurRajyaContent } from "../data/content";
+import { bhojpurRajyaContent } from "./data/content";
 import Image from "next/image";
 
 interface District {

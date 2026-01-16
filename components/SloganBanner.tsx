@@ -1,11 +1,84 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Flame, Heart, Share2, Users } from "lucide-react";
-import { bhojpurRajyaContent } from "../data/content";
+import { bhojpurRajyaContent } from "./data/content";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function SloganBanner() {
+  const [supportLoading, setSupportLoading] = useState(false);
+  const [shareLoading, setShareLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleSupport = async () => {
+    try {
+      setSupportLoading(true);
+      const response = await fetch("/api/like", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ likeType: "support" }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setMessage("समर्थन के लिए धन्यवाद! 🙏");
+        setTimeout(() => setMessage(""), 3000);
+      }
+    } catch (error) {
+      console.error("Support error:", error);
+      setMessage("त्रुटि हुई। कृपया पुनः प्रयास करें।");
+      setTimeout(() => setMessage(""), 3000);
+    } finally {
+      setSupportLoading(false);
+    }
+  };
+
+  const handleShare = async () => {
+    try {
+      setShareLoading(true);
+      
+      // Log share action
+      await fetch("/api/like", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ likeType: "share" }),
+      });
+
+      // Share functionality
+      if (navigator.share) {
+        await navigator.share({
+          title: "भोजपुर राज्य आंदोलन",
+          text: "भोजपुरी भाषा-भाषी क्षेत्रों के लिए अलग राज्य की मांग - भोजपुर राज्य आंदोलन में शामिल हों!",
+          url: window.location.href,
+        });
+        setMessage("शेयर करने के लिए धन्यवाद! 🙏");
+      } else {
+        // Fallback - copy to clipboard
+        await navigator.clipboard.writeText(window.location.href);
+        setMessage("लिंक कॉपी हो गया! अब आप इसे शेयर कर सकते हैं। 📋");
+      }
+      setTimeout(() => setMessage(""), 3000);
+    } catch (error) {
+      console.error("Share error:", error);
+      setMessage("शेयर करने के लिए धन्यवाद! 🙏");
+      setTimeout(() => setMessage(""), 3000);
+    } finally {
+      setShareLoading(false);
+    }
+  };
+
+  const scrollToRegistration = () => {
+    const element = document.getElementById("registration");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -166,8 +239,23 @@ export default function SloganBanner() {
             viewport={{ once: true }}
             className="mt-12 space-y-8"
           >
+            {/* Success Message */}
+            <AnimatePresence>
+              {message && (
+                <motion.div
+                  initial={{ opacity: 0, y: -20, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -20, scale: 0.9 }}
+                  className="bg-white text-green-600 px-8 py-4 rounded-full inline-block font-bold shadow-2xl text-lg"
+                >
+                  {message}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <div className="flex flex-wrap justify-center gap-4">
               <motion.button
+                onClick={scrollToRegistration}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 className="flex items-center gap-3 bg-white text-orange-600 px-8 py-4 rounded-full text-xl font-black shadow-2xl hover:shadow-white/30 transition-all duration-300"
@@ -176,20 +264,24 @@ export default function SloganBanner() {
                 आंदोलन में शामिल हों
               </motion.button>
               <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-3 bg-green-500 text-white px-8 py-4 rounded-full text-xl font-black shadow-2xl hover:bg-green-400 transition-all duration-300 border-2 border-white/50"
+                onClick={handleSupport}
+                disabled={supportLoading}
+                whileHover={{ scale: supportLoading ? 1 : 1.05, y: supportLoading ? 0 : -2 }}
+                whileTap={{ scale: supportLoading ? 1 : 0.95 }}
+                className="flex items-center gap-3 bg-green-500 text-white px-8 py-4 rounded-full text-xl font-black shadow-2xl hover:bg-green-400 transition-all duration-300 border-2 border-white/50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Heart className="w-6 h-6" />
-                समर्थन करें
+                {supportLoading ? "प्रतीक्षा करें..." : "समर्थन करें"}
               </motion.button>
               <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-3 bg-white/20 backdrop-blur-md text-white px-8 py-4 rounded-full text-xl font-bold shadow-xl hover:bg-white/30 transition-all duration-300 border border-white/40"
+                onClick={handleShare}
+                disabled={shareLoading}
+                whileHover={{ scale: shareLoading ? 1 : 1.05, y: shareLoading ? 0 : -2 }}
+                whileTap={{ scale: shareLoading ? 1 : 0.95 }}
+                className="flex items-center gap-3 bg-white/20 backdrop-blur-md text-white px-8 py-4 rounded-full text-xl font-bold shadow-xl hover:bg-white/30 transition-all duration-300 border border-white/40 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Share2 className="w-6 h-6" />
-                शेयर करें
+                {shareLoading ? "प्रतीक्षा करें..." : "शेयर करें"}
               </motion.button>
             </div>
 

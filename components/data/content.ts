@@ -1,7 +1,7 @@
 export const bhojpurRajyaContent = {
   hero: {
-    title: "भोजपुर राज्य आंदोलन",
-    subtitle: "Bhojpur Rajya Andolan",
+    title: "भोजपुर राज्य निर्माण समिति",
+    subtitle: "Bhojpur State Formation Committee",
     slogan: "भोजपुरी हमार पहिचान, भोजपुर राज्य हमार सम्मान!",
     poem: [
       "सुनs हो बहिनी, सुनs हो भइया,",

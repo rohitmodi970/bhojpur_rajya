@@ -1,11 +1,81 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChevronDown, Play, UserPlus } from "lucide-react";
-import { bhojpurRajyaContent } from "../data/content";
+import { ChevronDown, UserPlus, Heart, Share2 } from "lucide-react";
+import { bhojpurRajyaContent } from "./data/content";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Hero() {
+  const [supportLoading, setSupportLoading] = useState(false);
+  const [shareLoading, setShareLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleSupport = async () => {
+    try {
+      setSupportLoading(true);
+      const response = await fetch("/api/like", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ likeType: "support" }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setMessage("समर्थन के लिए धन्यवाद! 🙏");
+        setTimeout(() => setMessage(""), 3000);
+      }
+    } catch (error) {
+      console.error("Support error:", error);
+      setMessage("त्रुटि हुई। कृपया पुनः प्रयास करें।");
+      setTimeout(() => setMessage(""), 3000);
+    } finally {
+      setSupportLoading(false);
+    }
+  };
+
+  const handleShare = async () => {
+    try {
+      setShareLoading(true);
+      
+      // Log share action
+      await fetch("/api/like", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ likeType: "share" }),
+      });
+
+      // Share functionality
+      if (navigator.share) {
+        await navigator.share({
+          title: "भोजपुर राज्य आंदोलन",
+          text: "भोजपुरी भाषा-भाषी क्षेत्रों के लिए अलग राज्य की मांग - भोजपुर राज्य आंदोलन में शामिल हों!",
+          url: window.location.href,
+        });
+        setMessage("शेयर करने के लिए धन्यवाद! 🙏");
+      } else {
+        // Fallback - copy to clipboard
+        await navigator.clipboard.writeText(window.location.href);
+        setMessage("लिंक कॉपी हो गया! अब आप इसे शेयर कर सकते हैं। 📋");
+      }
+      setTimeout(() => setMessage(""), 3000);
+    } catch (error) {
+      console.error("Share error:", error);
+    } finally {
+      setShareLoading(false);
+    }
+  };
+
+  const scrollToRegistration = () => {
+    const element = document.getElementById("registration");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated Gradient Background with mesh pattern */}
@@ -180,29 +250,47 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5 }}
-          className="mt-10 flex flex-wrap justify-center gap-4"
+          className="mt-10"
         >
-          <a
-            href="#vision"
-            className="flex items-center gap-2 bg-white text-orange-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-orange-50 transition-colors shadow-lg hover:shadow-xl"
-          >
-            आंदोलन के बारे में
-            <ChevronDown className="w-5 h-5" />
-          </a>
-          <a
-            href="#registration"
-            className="flex items-center gap-2 bg-linear-to-r from-orange-500 via-red-500 to-orange-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl transition-shadow border-2 border-white/30"
-          >
-            <UserPlus className="w-5 h-5" />
-            आंदोलन में शामिल हों
-          </a>
-          <a
-            href="#map"
-            className="flex items-center gap-2 bg-white/20 backdrop-blur-md text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/30 transition-colors border border-white/40"
-          >
-            <Play className="w-5 h-5" />
-            मानचित्र देखें
-          </a>
+          {/* Message Display */}
+          {message && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="mb-4 bg-green-500 text-white px-6 py-3 rounded-full inline-block font-bold shadow-lg"
+            >
+              {message}
+            </motion.div>
+          )}
+          
+          <div className="flex flex-wrap justify-center gap-4">
+            <button
+              onClick={scrollToRegistration}
+              className="flex items-center gap-2 bg-linear-to-r from-orange-500 via-red-500 to-orange-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl transition-shadow border-2 border-white/30"
+            >
+              <UserPlus className="w-5 h-5" />
+              आंदोलन में शामिल हों
+            </button>
+            
+            <button
+              onClick={handleSupport}
+              disabled={supportLoading}
+              className="flex items-center gap-2 bg-white text-orange-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-orange-50 transition-colors shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Heart className="w-5 h-5" />
+              {supportLoading ? "प्रतीक्षा करें..." : "समर्थन करें"}
+            </button>
+            
+            <button
+              onClick={handleShare}
+              disabled={shareLoading}
+              className="flex items-center gap-2 bg-white/20 backdrop-blur-md text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/30 transition-colors border border-white/40 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Share2 className="w-5 h-5" />
+              {shareLoading ? "प्रतीक्षा करें..." : "शेयर करें"}
+            </button>
+          </div>
         </motion.div>
 
         {/* Scroll Indicator */}

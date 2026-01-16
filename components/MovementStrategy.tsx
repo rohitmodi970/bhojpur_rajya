@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Scale, FileText, Users, Megaphone, ArrowRight } from "lucide-react";
-import { bhojpurRajyaContent } from "../data/content";
+import { bhojpurRajyaContent } from "./data/content";
 import Image from "next/image";
 
 export default function MovementStrategy() {

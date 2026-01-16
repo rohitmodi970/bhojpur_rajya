@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Target, Sparkles } from "lucide-react";
-import { bhojpurRajyaContent } from "../data/content";
+import { bhojpurRajyaContent } from "./data/content";
 import Image from "next/image";
 
 export default function Vision() {

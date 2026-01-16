@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { BookOpen, CheckCircle2, Scale, FileCheck } from "lucide-react";
-import { bhojpurRajyaContent } from "../data/content";
+import { bhojpurRajyaContent } from "./data/content";
 import Image from "next/image";
 
 export default function ConstitutionalBasis() {

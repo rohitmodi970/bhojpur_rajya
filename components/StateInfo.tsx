@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { MapIcon, Maximize, Building2, Waves, Mountain, Wheat, Factory } from "lucide-react";
-import { bhojpurRajyaContent } from "../data/content";
+import { bhojpurRajyaContent } from "./data/content";
 import Image from "next/image";
 
 export default function StateInfo() {

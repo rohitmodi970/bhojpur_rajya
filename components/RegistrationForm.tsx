@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { User, MapPin, Phone, Mail, Send, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
-import { bhojpurRajyaContent } from "../data/content";
+import { bhojpurRajyaContent } from "./data/content";
 
 export default function RegistrationForm() {
   const [formData, setFormData] = useState({
@@ -14,6 +14,7 @@ export default function RegistrationForm() {
     email: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   // All 28 districts
@@ -57,20 +58,40 @@ export default function RegistrationForm() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (validateForm()) {
-      // TODO: Backend integration will go here
-      console.log("Form Data:", formData);
+      setIsLoading(true);
       
-      setIsSubmitted(true);
-      
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setFormData({ name: "", district: "", mobile: "", email: "" });
-      }, 3000);
+      try {
+        const response = await fetch("/api/registration", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          setIsSubmitted(true);
+          
+          // Reset form after 3 seconds
+          setTimeout(() => {
+            setIsSubmitted(false);
+            setFormData({ name: "", district: "", mobile: "", email: "" });
+          }, 3000);
+        } else {
+          setErrors({ submit: data.message || "पंजीकरण में त्रुटि हुई।" });
+        }
+      } catch (error) {
+        console.error("Registration error:", error);
+        setErrors({ submit: "पंजीकरण में त्रुटि हुई। कृपया पुनः प्रयास करें।" });
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -282,13 +303,21 @@ export default function RegistrationForm() {
                   {/* Submit Button */}
                   <motion.button
                     type="submit"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="w-full bg-linear-to-r from-orange-500 via-red-500 to-orange-600 text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 hover:shadow-xl transition-all duration-300 group"
+                    disabled={isLoading}
+                    whileHover={{ scale: isLoading ? 1 : 1.02 }}
+                    whileTap={{ scale: isLoading ? 1 : 0.98 }}
+                    className="w-full bg-linear-to-r from-orange-500 via-red-500 to-orange-600 text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3 hover:shadow-xl transition-all duration-300 group disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <Send size={20} className="group-hover:translate-x-1 transition-transform" />
-                    पंजीकरण करें (Submit Registration)
+                    <Send size={20} className={`${!isLoading && "group-hover:translate-x-1"} transition-transform`} />
+                    {isLoading ? "कृपया प्रतीक्षा करें..." : "पंजीकरण करें"}
                   </motion.button>
+
+                  {/* Error Message */}
+                  {errors.submit && (
+                    <p className="text-red-500 text-center text-sm mt-2 flex items-center justify-center gap-1">
+                      <span>⚠️</span> {errors.submit}
+                    </p>
+                  )}
 
                   {/* Privacy Note */}
                   <p className="text-center text-sm text-slate-500 mt-4">

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { BookOpen, MapPin, Scale, CheckCircle } from "lucide-react";
-import { bhojpurRajyaContent } from "../data/content";
+import { bhojpurRajyaContent } from "./data/content";
 
 const iconMap = {
   language: BookOpen,

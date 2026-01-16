@@ -1,38 +1,12 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { MapPin, Maximize2, Factory, TrendingUp, Info } from "lucide-react";
-import { bhojpurRajyaContent } from "../data/content";
-
-// All 28 districts with data
-const allDistricts = [
-  // Bihar - 9 districts
-  ...bhojpurRajyaContent.districts.bihar.map((d) => ({
-    ...d,
-    state: "bihar" as const,
-    color: "bg-orange-500",
-  })),
-  // UP - 17 districts
-  ...bhojpurRajyaContent.districts.up.map((d) => ({
-    ...d,
-    state: "up" as const,
-    color: "bg-blue-500",
-  })),
-  // Jharkhand - 2 districts
-  ...bhojpurRajyaContent.districts.jharkhand.map((d) => ({
-    ...d,
-    state: "jharkhand" as const,
-    color: "bg-green-500",
-  })),
-];
+import { useState } from "react";
 
 export default function InteractiveMap() {
-  const [selectedDistrict, setSelectedDistrict] = useState<typeof allDistricts[0] | null>(null);
-  const [activeTab, setActiveTab] = useState<"bihar" | "up" | "jharkhand">("bihar");
-
-  const filteredDistricts = allDistricts.filter(d => d.state === activeTab);
+  const [activeTab, setActiveTab] = useState<string>("bihar");
+  const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null);
 
   return (
     <section className="py-20 bg-linear-to-b from-white to-blue-50">
@@ -47,8 +21,8 @@ export default function InteractiveMap() {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
             🗺️ प्रस्तावित भोजपुरी राज्य का मानचित्र
           </h2>
-          <p className="text-xl text-gray-600">
-            Proposed Bhojpur State Map - 28 Districts
+          <p className="text-xl text-gray-600 hindi-text">
+            28 जिलों वाला प्रस्तावित भोजपुर राज्य
           </p>
           <div className="w-24 h-1 bg-linear-to-r from-orange-500 via-blue-500 to-green-500 mx-auto rounded-full mt-4"></div>
         </motion.div>
@@ -63,9 +37,9 @@ export default function InteractiveMap() {
             className="mb-12"
           >
             <div className="bg-white rounded-3xl shadow-2xl p-4 md:p-8 border-4 border-orange-200 overflow-hidden">
-              <div className="relative w-full aspect-4/3 md:aspect-video rounded-2xl overflow-hidden">
+              <div className="relative w-full aspect-4/3 rounded-2xl overflow-hidden">
                 <Image
-                  src="/map.png"
+                  src="/map1.png"
                   alt="Bhojpur Rajya Map - प्रस्तावित भोजपुर राज्य का मानचित्र"
                   fill
                   className="object-contain"
@@ -78,7 +52,7 @@ export default function InteractiveMap() {
               {/* Map Caption */}
               <div className="mt-6 text-center">
                 <p className="text-lg font-semibold text-gray-700">
-                  भोजपुरी भाषा-भाषी क्षेत्रों को मिलाकर प्रस्तावित भोजपुरी राज्य
+                  भोजपुरी भाषा-भाषी क्षेत्रों को मिलाकर प्रस्तावित भोजपुर राज्य
                 </p>
                 <p className="text-gray-500">
                   बिहार, उत्तर प्रदेश और झारखंड के कुल <span className="font-bold text-orange-600">28 जिले</span> | 
@@ -130,79 +104,6 @@ export default function InteractiveMap() {
                 <span className="w-3 h-3 bg-green-400 rounded-full"></span>
                 झारखंड (2 जिले)
               </button>
-            </div>
-
-            {/* District Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredDistricts.map((district, index) => (
-                <motion.div
-                  key={district.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                  onClick={() => setSelectedDistrict(selectedDistrict?.name === district.name ? null : district)}
-                  className={`cursor-pointer rounded-2xl p-4 transition-all duration-300 border-2 ${
-                    selectedDistrict?.name === district.name
-                      ? `${district.state === "bihar" ? "border-orange-500 bg-orange-50" : district.state === "up" ? "border-blue-500 bg-blue-50" : "border-green-500 bg-green-50"} shadow-xl scale-[1.02]`
-                      : "border-gray-200 bg-white hover:shadow-lg hover:border-gray-300"
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${district.color} text-white`}>
-                      <MapPin className="w-5 h-5" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-bold text-gray-800">{district.name}</h4>
-                      <p className="text-sm text-gray-500">{district.area} वर्ग कि.मी.</p>
-                    </div>
-                    <Info className={`w-5 h-5 ${selectedDistrict?.name === district.name ? "text-orange-500" : "text-gray-400"}`} />
-                  </div>
-
-                  {/* Expanded Details */}
-                  <AnimatePresence>
-                    {selectedDistrict?.name === district.name && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="mt-4 pt-4 border-t border-gray-200 space-y-3">
-                          <div className="flex items-start gap-2">
-                            <Maximize2 className="w-4 h-4 text-orange-500 mt-1 shrink-0" />
-                            <div>
-                              <span className="text-xs text-gray-500 block">क्षेत्रफल</span>
-                              <span className="font-semibold text-gray-800">{district.area} वर्ग कि.मी.</span>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-2">
-                            <span className="text-lg shrink-0">🌿</span>
-                            <div>
-                              <span className="text-xs text-gray-500 block">प्राकृतिक संसाधन</span>
-                              <span className="text-gray-800">{district.resources}</span>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-2">
-                            <Factory className="w-4 h-4 text-blue-500 mt-1 shrink-0" />
-                            <div>
-                              <span className="text-xs text-gray-500 block">प्रमुख उद्योग</span>
-                              <span className="text-gray-800">{district.industries}</span>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-2">
-                            <TrendingUp className="w-4 h-4 text-green-500 mt-1 shrink-0" />
-                            <div>
-                              <span className="text-xs text-gray-500 block">आर्थिक गतिविधि</span>
-                              <span className="text-gray-800">{district.economy}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              ))}
             </div>
           </motion.div>
 
