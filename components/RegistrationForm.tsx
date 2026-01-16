@@ -190,7 +190,7 @@ export default function RegistrationForm() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Name Field */}
                   <div>
-                    <label htmlFor="name" className="block text-slate-700 font-bold mb-2 flex items-center gap-2">
+                    <label htmlFor="name" className="block text-gray-900 font-bold mb-2 flex items-center gap-2">
                       <User size={18} className="text-orange-500" />
                       नाम (Name) <span className="text-red-500">*</span>
                     </label>
@@ -201,7 +201,7 @@ export default function RegistrationForm() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="अपना पूरा नाम दर्ज करें"
-                      className={`w-full px-4 py-3 rounded-xl border-2 ${
+                      className={`text-black w-full px-4 py-3 rounded-xl border-2 ${
                         errors.name ? 'border-red-400 bg-red-50' : 'border-slate-200 bg-white'
                       } focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-all duration-300`}
                     />
@@ -214,7 +214,7 @@ export default function RegistrationForm() {
 
                   {/* District Field */}
                   <div>
-                    <label htmlFor="district" className="block text-slate-700 font-bold mb-2 flex items-center gap-2">
+                    <label htmlFor="district" className="block text-gray-900 font-bold mb-2 flex items-center gap-2">
                       <MapPin size={18} className="text-orange-500" />
                       जिला (District) <span className="text-red-500">*</span>
                     </label>
@@ -223,7 +223,7 @@ export default function RegistrationForm() {
                       name="district"
                       value={formData.district}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 rounded-xl border-2 ${
+                      className={`text-black w-full px-4 py-3 rounded-xl border-2 ${
                         errors.district ? 'border-red-400 bg-red-50' : 'border-slate-200 bg-white'
                       } focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-all duration-300 cursor-pointer`}
                     >
@@ -253,7 +253,7 @@ export default function RegistrationForm() {
 
                   {/* Mobile Field */}
                   <div>
-                    <label htmlFor="mobile" className="block text-slate-700 font-bold mb-2 flex items-center gap-2">
+                    <label htmlFor="mobile" className="block text-gray-900 font-bold mb-2 flex items-center gap-2">
                       <Phone size={18} className="text-orange-500" />
                       मोबाइल नंबर (Mobile Number) <span className="text-red-500">*</span>
                     </label>
@@ -265,7 +265,7 @@ export default function RegistrationForm() {
                       onChange={handleChange}
                       placeholder="10 अंकों का मोबाइल नंबर"
                       maxLength={10}
-                      className={`w-full px-4 py-3 rounded-xl border-2 ${
+                      className={`text-black w-full px-4 py-3 rounded-xl border-2 ${
                         errors.mobile ? 'border-red-400 bg-red-50' : 'border-slate-200 bg-white'
                       } focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-all duration-300`}
                     />
@@ -278,7 +278,7 @@ export default function RegistrationForm() {
 
                   {/* Email Field (Optional) */}
                   <div>
-                    <label htmlFor="email" className="block text-slate-700 font-bold mb-2 flex items-center gap-2">
+                    <label htmlFor="email" className="block text-gray-900 font-bold mb-2 flex items-center gap-2">
                       <Mail size={18} className="text-orange-500" />
                       ईमेल (Email) <span className="text-slate-400 text-sm font-normal">(वैकल्पिक / Optional)</span>
                     </label>
@@ -289,7 +289,7 @@ export default function RegistrationForm() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="example@email.com"
-                      className={`w-full px-4 py-3 rounded-xl border-2 ${
+                      className={`text-black w-full px-4 py-3 rounded-xl border-2 ${
                         errors.email ? 'border-red-400 bg-red-50' : 'border-slate-200 bg-white'
                       } focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-all duration-300`}
                     />
